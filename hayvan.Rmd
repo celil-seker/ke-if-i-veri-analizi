@@ -1,0 +1,254 @@
+```{r}
+df<-muayene_edilen_hayvanlar_Kopya
+
+```
+
+```{r}
+head(df)
+```
+
+```{r}
+str(df)
+```
+```{r}
+library("tidyverse")
+```
+
+```{r}
+library(funModeling)
+profiling_num(df)
+plot_num(df)
+freq(df)
+```
+
+```{r}
+library(dplyr)
+glimpse(df)
+
+```
+
+
+
+```{r}
+df$Yaş2=factor(rep(c("1","2","3"),length=nrow(df)))
+```
+
+```{r}
+glimpse(df)
+```
+```{r}
+df$Yaş=NULL
+```
+
+```{r}
+library(shiny)
+```
+
+```{r}
+library(d3Tree)
+d3tree(list(root = df2tree(rootname ='df', 
+                           struct = as.data.frame(df)), 
+                           layout = 'collapse'))
+
+devtools::install_github("rsquaredacademy/xplorerr")
+library(xplorerr)
+app_descriptive()
+
+
+```
+
+
+```{r}
+glimpse(df)
+```
+```{r}
+ggplot(df, aes(`Tür Adı`)) +
+  geom_bar()
+
+ggplot(df, aes(Yaş2, fill = `Tali Renk`)) +
+  geom_bar(position = position_dodge()) + 
+  ggtitle("Bu yazi ana baslik yazididir") +
+  xlab("Tür adı") + 
+  ylab("Gozlenme Sikliklari")
+
+
+```
+```{r}
+glimpse(df)
+```
+
+
+```{r}
+ggplot(df, aes(Yaş2)) +
+  geom_histogram(binwidth = 1000)
+
+ggplot(df, aes(Yaş2)) +
+  geom_density()
+
+ggplot(df, aes(price)) +
+  geom_histogram(aes(y = ..density..)) +
+  geom_density(alpha = .3, fill = "orange") 
+
+ggplot(df, aes(price)) +
+  geom_histogram() + 
+  facet_grid(cut ~. )
+
+```
+
+
+```{r}
+head(fr)
+```
+
+
+
+```{r}
+glimpse(df)
+
+```
+
+```{r}
+df$Yaş3 <- as.integer(df$Yaş2[])
+
+
+
+
+## Histogram ve Yogunluk
+```
+
+
+```{r}
+
+
+
+```
+
+
+```{r}
+glimpse(df)
+```
+
+
+```{r}
+ggplot(df, aes(Yaş3[])) +
+  geom_histogram(binwidth = 1000)
+
+ggplot(df, aes(Yaş3[])) +
+  geom_density()
+
+ggplot(df, aes(Yaş3[])) +
+  geom_histogram(aes(y = ..density..)) +
+  geom_density(alpha = .3, fill = "orange") 
+
+ggplot(df, aes(Yaş3[])) +
+  geom_histogram() + 
+  facet_grid(`Tür Adı` ~. )
+
+```
+
+
+
+```{r}
+library(ggridges)
+
+ggplot(df, aes(x = Yaş3, y = `Ana Renk`, fill = `Ana Renk`)) +
+  geom_density_ridges() + 
+  theme_ridges() + 
+  theme(legend.position = "none")
+```
+
+
+
+```{r}
+library(plotly)
+g <- plot_ly(x = rnorm(500), type = "histogram")
+g
+
+g <- plot_ly(x = rnorm(500), opacity = 0.6, type = "histogram") %>%
+  add_trace(x = rnorm(500) + 1) %>%
+  layout(barmode =  "overlay")
+g
+
+```
+
+
+## Coklu Frekans 
+```{r}
+ggplot(df, aes(Yaş3, y = ..density..)) +
+  geom_density(aes(colour = `Ana Renk`), binwidth = 500)
+
+```
+
+## Box Plot
+```{r}
+
+ggplot(df, aes(x = `Ana Renk` , y = Yaş3, fill = `Ana Renk`)) +
+         geom_boxplot()
+
+```
+
+
+## Violin
+```{r}
+ggplot(df, aes(x =`Ana Renk` , y = Yaş3, fill = `Ana Renk`)) +
+         geom_violin(alpha = 0.6)
+```
+
+
+## Scatter Plot
+
+
+```{r}
+glimpse(df)
+```
+
+###kolerasyon  Giris 
+```{r}
+library(tidyverse)
+
+```
+
+
+```{r}
+ggplot(df, aes(`Tür Adı`, `Irk Adı`)) +
+  geom_point(size = 2, 
+             shape = 21, 
+             stroke = 1,
+             color = "black",
+             fill = "orange") +
+  geom_smooth(color = "red")
+```
+
+
+```{r}
+ggplot(df, aes(`Tür Adı`, `Irk Adı`, color = `Ana Renk`, shape = `Ana Renk` )) +
+  geom_point(size = 10, alpha = 0.6) 
+  
+
+ggplot(df, aes(`Tür Adı`, `Irk Adı`, color = `İşaretleme Adı`, size = `İşaretleme Adı` )) +
+  geom_point(alpha = 0.8) 
+
+
+
+```
+
+
+
+ Birimleri Grafige Eklemek
+```{r}
+glimpse(mtcars)
+```
+
+
+```{r}
+ggplot(df, aes(x = `Ana Renk`, y = Yaş3, fill = `Irk Adı` )) +
+  geom_point() + 
+  geom_label(label = rownames(df),  
+            nudge_x = 0.25, 
+            nudge_y = 0.2) +
+  geom_smooth(method = lm, se = FALSE)
+
+```
+
+
+
